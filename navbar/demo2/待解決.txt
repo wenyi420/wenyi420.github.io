@@ -1,0 +1,7 @@
+1. 當桌機變手機時 會看到 ul 跑出螢幕外的動畫
+
+以解決
+
+將 手機時 transform: translateX(100%); 改成 right(50%) 剛好在螢幕外邊
+
+點擊toggle時  transform: translateX(-100%) 移入
