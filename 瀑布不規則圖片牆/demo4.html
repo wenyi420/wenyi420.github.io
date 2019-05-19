@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test4</title>
+	<script src="jquery-min.js">
+	</script>
+</head>
+<style>
+.waterfall{
+  width: 80%;
+    margin: 0 auto;
+	column-count: 3;
+	column-gap: 0;
+　　
+}
+            
+.item{
+	box-sizing: border-box;
+	break-inside: avoid;
+	padding: 10px;
+　　
+}
+.item-content{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 10px;
+	height: auto;
+	font-size: 20px;
+	color: black;
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+　　
+}	
+.item-content img{
+	max-width: 100%;
+}
+@media screen and (max-width: 768px){
+	.waterfall{
+
+	column-count: 2;
+	column-gap: 0;
+　　
+	}
+
+}
+
+@media screen and (max-width: 480px){
+	.waterfall{
+	column-count: 1;
+	column-gap: 0;
+　　
+	}
+	
+}
+</style>
+<body>
+	<div class="waterfall">
+   <div class="item">
+      <div class="item-content">
+      	<a href="#">
+         <img src="images/left1.png" alt="">
+         </a>
+      </div>
+   </div>
+   <div class="item">
+       <div class="item-content">
+          <img src="images/left2.png" alt="">
+       </div>
+   </div>
+   <div class="item">
+      <div class="item-content">
+          <img src="images/left3.png" alt="">
+      </div>
+   </div>
+   <div class="item">
+      <div class="item-content">
+         <img src="images/mid1.png" alt="">
+      </div>
+   </div>
+   <div class="item">
+       <div class="item-content">
+          <img src="images/mid2.png" alt="">
+       </div>
+   </div>
+   <div class="item">
+      <div class="item-content">
+          <img src="images/right1.png" alt="">
+      </div>
+   </div>
+   <div class="item">
+      <div class="item-content">
+         <img src="images/right2.png" alt="">
+      </div>
+   </div>
+   <div class="item">
+      <div class="item-content">
+          <img src="images/right3.png" alt="">
+      </div>
+   </div>
+</div> 
+
+
+<script>
+  $(function(){
+      // $(".item:nth-child(1) .item-content img").attr("src","images/left1back.png");
+      // $(".item:nth-child(2) .item-content img").attr("src","images/left1back.png");
+  })
+</script>
+</body>
+</html>
