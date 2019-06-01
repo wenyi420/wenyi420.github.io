@@ -105,8 +105,10 @@
 	<input type="text" id="Date1" onchange="isChangeMonth()"  name="Date1" onfocus="WdatePicker({minDate:'%y-%M-%d',maxDate:'#F{$dp.$D(\'Date2\',{d:-1})||\'{%y+1}-%M-%d\'}'})">
 
 	<label for="Date2"><p>退房日期:</p></label>
-	<input type="text" id="Date2" name="Date2" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'Date1\',{d:+1}) || \'%y-%M-{%d+1\'}'})">
-
+	
+	<input type="text" id="Date2" name="Date2" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'Date1\',{d:1})||\'%y-%M-{%d+1}\'}'})" />
+	
+	
 	
 	
 </body>
