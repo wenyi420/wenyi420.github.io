@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>測試日期套件使用</title>
+	<script src="js/jquery-min.js"></script>
+	<script src="js/My97DatePicker/WdatePicker.js"></script>
+
+</head>
+
+<script>
+
+	
+
+	var isChangeMonth = function(){
+
+								var dayValue = $("#Date1").val();
+								var getDay = dayValue.slice(8,10);
+								var getMonth = dayValue.slice(5,7);
+								var getYear = dayValue.slice(0,5);
+								var lastdays = dayValue.slice(0,8);
+								
+								//判斷是否大月
+								if(getMonth == 01 || getMonth == 03 || getMonth == 05 || getMonth == 07 || getMonth == 08 || getMonth == 10 || getMonth == 12 ){
+									//判斷當日是否31號 
+									if(getDay == 31){
+										// 直接替換成 1號
+										getDay = "01";
+										// 當月 +1
+										getMonth= Number(getMonth)
+								 		getMonth += 1 ;
+								 		getMonth = String(getMonth);
+								 		// 判斷是否 10月以上 不需 + "0"
+								 		if(getMonth<=9){
+								 			var adZeroMonth = "0" + getMonth;
+								 			$("#Date2").val(getYear + adZeroMonth+ "-" +getDay);
+								 			// getLastDay.value =  getYear + adZeroMonth+ "-" +getDay ;
+								 		}else{
+								 			$("#Date2").val(getYear + getMonth+ "-" +getDay);
+								 			// getLastDay.value =  getYear + getMonth+ "-" +getDay ;
+								 		}
+
+								 		
+									}else{
+										addOneToLastDay();
+									}
+								// 小月
+								}else{
+									if(getDay == 30){
+										getDay = "01";
+										// 當月 +1
+										getMonth= Number(getMonth)
+								 		getMonth += 1 ;
+								 		getMonth = String(getMonth);
+								 		if(getMonth<=9){
+								 			var adZeroMonth = "0" + getMonth;
+								 			$("#Date2").val(getYear + adZeroMonth+ "-" +getDay);
+								 			// getLastDay.value =  getYear + adZeroMonth+ "-" +getDay ;
+								 		}else{
+								 			$("#Date2").val(getYear + getMonth+ "-" +getDay );
+								 			// getLastDay.value =  getYear + getMonth+ "-" +getDay ;
+								 		}
+									}else{
+										addOneToLastDay();
+									}
+								}
+
+							}
+	var addOneToLastDay = function(){
+
+								var dayValue = $("#Date1").val();
+								var getDay = dayValue.slice(8,10);
+								var getMonth = dayValue.slice(5,7);
+								var getYear = dayValue.slice(0,5);
+								var lastdays = dayValue.slice(0,8);
+								
+								getDay= Number(getDay)
+							 	getDay += 1 ;
+							 	getDay = String(getDay);
+								// 判斷是否 小於等於9 則需加 0 在前 才不會 2019-01-1
+								 if(getDay<=9){
+								 	var adZeroDay = "0" + getDay;
+								 	// 將 有加 0 的 變數 帶入
+								 	// 2019-01-  +  "01~09"
+								 	lastdays += adZeroDay;
+								 	// 將組成的 2019-01-01 帶入 getLastDay的值
+								 	$("#Date2").val(lastdays);
+								 // 大於等於 10 就直接加沒處理 +0字串的值	
+								 }else{
+								 	lastdays += getDay;
+								 	$("#Date2").val(lastdays);
+
+								 }
+							}
+	function getValue(){
+		console.log($("#Date1").val());
+		addOneToLastDay();
+		
+
+		
+	}
+</script>
+<body>
+	<label for="Date1"><p>入住日期:</p></label>
+	<input type="text" id="Date1" onchange="isChangeMonth()"  name="Date1" onfocus="WdatePicker({minDate:'%y-%M-%d',maxDate:'#F{$dp.$D(\'Date2\',{d:-1})||\'{%y+1}-%M-%d\'}'})">
+
+	<label for="Date2"><p>退房日期:</p></label>
+	<input type="text" id="Date2" name="Date2" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'Date1\',{d:+1}) || \'%y-%M-{%d+1\'}'})">
+
+	
+	
+</body>
+</html>
+
+
