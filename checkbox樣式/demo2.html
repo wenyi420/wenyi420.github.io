@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>checkbox樣式</title>
+	<script src="../../jquery-min.js"></script>
+</head>
+<style>
+	
+
+
+.myCheckbox input {
+    // display: none;
+    // Better than display: none for accessibility reasons
+    position: relative;
+    z-index: -9999;
+}
+
+.myCheckbox span {
+    z-index: 9999;
+    width: 20px;
+    height: 20px;
+    display: block;
+	position: absolute;
+	left: 216px;
+	top: 8px;
+    border:1px solid lightgray;
+    background: #fff;
+}
+
+.myCheckbox input:checked + span {
+	position: absolute;
+	left: 216px;
+	top: 8px;
+    border:1px solid red;
+}
+.myCheckbox input + span::before{
+    transition: all .3s ease; 
+    content: "";
+    position: absolute;
+    background: blue;
+    width: 1px;
+    height: 1px;
+    border-left: 1px solid red;
+    transform: rotate(126deg);
+    left: 4px;
+    top: 7px;
+
+}
+.myCheckbox input + span::after{
+    transition: all .6s ease .2s; 
+     content: "";
+    position: absolute;
+    background: blue;
+    width: 1px;
+    height: 1px;
+    border-left: 1px solid red;
+    transform: rotate(-50deg);
+    left: 12px;
+    top: -2px;
+
+}
+.myCheckbox input:checked + span::before{
+    content: "";
+    position: absolute;
+    background: blue;
+    width: 1px;
+    height: 10px;
+    border-left: 1px solid red;
+    transform: rotate(126deg);
+    left: 4px;
+    top: 7px;
+
+}
+.myCheckbox input:checked + span::after{
+    content: "";
+    position: absolute;
+    background: blue;
+    width: 18px;
+    height: 1px;
+    border-left: 1px solid red;
+    transform: rotate(-50deg);
+    left: 12px;
+    top: -2px;
+
+}
+
+
+     
+
+</style>
+
+<body>
+
+<label for="test">Label for my styled "checkbox"</label>
+<label class="myCheckbox">
+    <input type="checkbox" name="test"/>
+    <span></span>
+</label>
+	
+
+</body>
+</html>
