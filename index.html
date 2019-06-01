@@ -1,136 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>checkbox樣式</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/index.css">
 </head>
-<style>
-	
-
-
-
-.myCheckbox span {
-	/*z-index: 9999;*/
-    width: 13px;
-    height: 13px;
-    display: block;
-    background: url("checkbox.png");
-    background-size: contain;
-     background-repeat: no-repeat;
-	position: absolute;
-	left: 220px;
-	top: 10px;
-}
-/* 隱藏原本的 checkbox 樣式 */
-.myCheck input{
-	opacity: 0;
-}
-.myCheckbox input + span::after{
-	content: "";
-	width: 16px;
-	height: 16px;
-	top: -5px;
-	position: absolute;
-	transition: all ease .5s;
-	opacity: 0;
-	background-position: 0% 0%;
-	background-image: url('checked.png');
-	background-size: contain;
-     background-repeat: no-repeat;
-}
-.myCheckbox input:checked + span::after {
-	/*z-index: 99;*/
-	content: "";
-	width: 16px;
-	height: 16px;
-	top: -5px;
-	position: absolute;
-	opacity: 1;
-	background-position : 50% 50%;
-
-     background-image: url('checked.png');
-     background-size: contain;
-     background-repeat: no-repeat;
-
-}
-/*checkbox css*/
-
-.checkboxItem{
-	display: flex;
-}
-.checkitem{
-	position: relative;
-}
-
-.myCheck span.checks {
-
-    width: 13px;
-    height: 13px;
-    display: block;
-    background: url("checkbox.png");
-    background-size: contain;
-     background-repeat: no-repeat;
-	position: absolute;
-	left: 0px;
-	top: 3px;
-}
-.myCheck input + span.checks::after{
-	content: "";
-	width: 16px;
-	height: 16px;
-	top: -5px;
-	position: absolute;
-	transition: all ease .5s;
-	opacity: 0;
-	background-position: 0% 0%;
-	background-image: url('checked.png');
-	background-size: contain;
-     background-repeat: no-repeat;
-}
-.myCheck input:checked + span.checks::after {
-
-	content: "";
-	width: 16px;
-	height: 16px;
-	top: -5px;
-	position: absolute;
-	opacity: 1;
-	background-position : 50% 50%;
-
-     background-image: url('checked.png');
-     background-size: contain;
-     background-repeat: no-repeat;
-
-}
-.checkboxItem .checkitem{
-	width:10%;
-}
-
-
-</style>
-
 <body>
-
-<label for="test">Label for my styled "checkbox"</label>
-<label class="myCheckbox">
-    <input type="checkbox" name="test"/>
-    <span></span>
-</label>
-
-
-<div class="list dashfind"><label><span>如何找到我們.選填</span><span class="checkboxTitle">(複選)</span></label>
-    <div class="checkboxItem">
-        <div class="checkitem"><label class="myCheck"><input type="checkbox" name="Getinfo[]" value="Facebook"><span class="checks"></span><span>Facebook</span></label></div>
-        
-        <div class="checkitem"><label class="myCheck"><input type="checkbox" name="Getinfo[]" value="Google"><span class="checks"></span><span>Google</span></label></div>
-        <div class="checkitem"><label class="myCheck"><input type="checkbox" name="Getinfo[]" value="Yahoo"><span class="checks"></span><span>Yahoo</span></label></div>
-        <div class="checkitem"><label class="myCheck"><input type="checkbox" name="Getinfo[]" value="朋友推薦"><span class="checks"></span><span>朋友推薦</span></label></div>
-        <div class="checkitem"><label class="myCheck"><input type="checkbox" name="" value="其他"><span class="checks"></span><span>其他</span></label></div>
-        <input id="checkOther"  type="text" name="Getinfo[]">
-    </div>
-
-</div>
+    
+    <nav>
+        <div class="hamburger">
+            <!-- 漢堡縣 -->
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contacts</a></li>
+            <li><a href="#">Projects</a></li>
+        </ul>
+    </nav>
 
 
+    <section class="landing">
+        <img src="circles.svg" alt="dots">
+        <h1>Dots</h1>
+    </section>
+
+    <script src="JS/app.js"></script>
 </body>
 </html>
