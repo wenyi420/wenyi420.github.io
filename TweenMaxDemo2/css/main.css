@@ -107,4 +107,5 @@ nav a{
 
 @media screen and (max-width:1024px){
     #trs1 img{height: 100vh !important;}
+    #trs #trs2 img,#trs #trs3 img{width: 120% !important;}
 }
