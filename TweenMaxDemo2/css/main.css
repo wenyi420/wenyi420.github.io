@@ -105,7 +105,7 @@ nav a{
 #trs #trs3.loading{top:0;}
 #trs.loading{pointer-events:none}
 
-@media screen and (max-width:1024px){
+@media screen and (max-width:640px){
     #trs1 img{height: 100vh !important;}
     #trs #trs2 img,#trs #trs3 img{height: 100vh !important;}
 }
