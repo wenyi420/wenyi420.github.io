@@ -106,5 +106,5 @@ nav a{
 #trs.loading{pointer-events:none}
 
 @media screen and (max-width:1024px){
-    #trs1 img{height: 50vh !important;}
+    #trs1 img{height: 100vh !important;}
 }
