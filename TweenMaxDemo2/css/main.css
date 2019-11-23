@@ -104,3 +104,7 @@ nav a{
 #trs #trs2.loading{top:0;}
 #trs #trs3.loading{top:0;}
 #trs.loading{pointer-events:none}
+
+@media screen and (max-width:1024px){
+    #trs1 img{height: 50vh !important;}
+}
