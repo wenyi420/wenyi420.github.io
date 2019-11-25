@@ -224,6 +224,9 @@ var loadingPage = function(){
 	TweenMax.from("#trs2", 0.5, {top:0,delay: .9})
 	TweenMax.from("#trs3", 0.5, {top:0,delay:.8})
 	loading = false ;
+	TweenMax.from(".container", 0.8, {opacity:0,delay:1.1})
+	TweenMax.from("nav", 0.8, {opacity:0,delay:1.8})
+	TweenMax.from(".title", 0.8, {opacity:0,delay:1.8})
 	return loadingPage;
 }
 
