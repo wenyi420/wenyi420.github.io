@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>測試js帶入數字跟跑進度條</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="swiper.css">
+	<script src="https://kit.fontawesome.com/dcf56f8735.js" crossorigin="anonymous"></script>
+<script src="jquery-1.11.3.min.js"></script>
+<script src="swiper.min.js"></script>
+
+</head>
+<body>
+	<!-- product -->
+	<div id="products" style=''>
+		<div class="container flex">
+			<div class="sectionTitle">
+	        	<h2>Our Projects</h2>
+	        </div>
+	        <div class="btn">
+				<a class="more" href="/room.html" title="MORE">
+					<span>MORE<i class="fa fa-chevron-right"></i></span>
+				</a>
+			</div>
+	    </div>
+        <div class="swiper-container">
+			<div class="swiper-wrapper products-list">
+				
+		        <div class="swiper-slide product-item">
+		        	<div class="photobox">
+		        		<div>
+		        			<span class="productIndex"></span>
+		        			<a class="photo" href="/room-49.html" style="background-image:url(images/28/20181008105721.jpg);" title="粉碎機&震動篩選機">
+		        				
+				        		<img src="images/28/prodcut-blank.png" border="0" alt="粉碎機&震動篩選機" />
+				            </a>
+		        		</div>
+		        	</div>
+		            <div class="info-content">
+		            	<a class="info" href="/room-49.html" title="粉碎機&震動篩選機">
+		        			<h3 class="title text-clamp">粉碎機&震動篩選機</h3>
+		            		<p class="price">
+		            			<span class="old" style='display:none;'>原價<b>0</b>元</span>
+		            			<span class="sale"  style='display:none;'>特價<b>0</b>元</span>
+		            		</p>
+			            </a>
+		            </div>
+		        </div>
+		        
+		        <div class="swiper-slide product-item">
+		        	<div class="photobox">
+		        		<div>
+		        			<span class="productIndex"></span>
+		        			<a class="photo" href="/room-99.html" style="background-image:url(images/28/20181008105721.jpg);" title="測試2">
+		        				
+				        		<img src="images/28/prodcut-blank.png" border="0" alt="測試2" />
+				            </a>
+		        		</div>
+		        	</div>
+		            <div class="info-content">
+		            	<a class="info" href="/room-99.html" title="測試2">
+		        			<h3 class="title text-clamp">測試2</h3>
+		            		<p class="price">
+		            			<span class="old">原價<b>41516</b>元</span>
+		            			<span class="sale" >特價<b>4851</b>元</span>
+		            		</p>
+			            </a>
+		            </div>
+		        </div>
+		        
+		        <div class="swiper-slide product-item">
+		        	<div class="photobox">
+		        		<div>
+		        			<span class="productIndex"></span>
+		        			<a class="photo" href="/room-86.html" style="background-image:url(images/28/20181008105721.jpg);" title="測試內頁樣式 門診表">
+		        				
+				        		<img src="images/28/prodcut-blank.png" border="0" alt="測試內頁樣式 門診表" />
+				            </a>
+		        		</div>
+		        	</div>
+		            <div class="info-content">
+		            	<a class="info" href="/room-86.html" title="測試內頁樣式 門診表">
+		        			<h3 class="title text-clamp">測試內頁樣式 門診表</h3>
+		            		<p class="price">
+		            			<span class="old">原價<b>1500</b>元</span>
+		            			<span class="sale" >特價<b>1500</b>元</span>
+		            		</p>
+			            </a>
+		            </div>
+		        </div>
+		        
+		        <div class="swiper-slide product-item">
+		        	<div class="photobox">
+		        		<div>
+		        			<span class="productIndex"></span>
+		        			<a class="photo" href="/room-106.html" style="background-image:url(images/28/20181008105721.jpg);" title="a">
+		        				
+				        		<img src="images/28/prodcut-blank.png" border="0" alt="a" />
+				            </a>
+		        		</div>
+		        	</div>
+		            <div class="info-content">
+		            	<a class="info" href="/room-106.html" title="a">
+		        			<h3 class="title text-clamp">a</h3>
+		            		<p class="price">
+		            			<span class="old" style='display:none;'>原價<b>0</b>元</span>
+		            			<span class="sale"  style='display:none;'>特價<b>0</b>元</span>
+		            		</p>
+			            </a>
+		            </div>
+		        </div>
+			</div>
+
+			<!-- Add Pagination -->
+    		<div id="progress-content">
+    			<div class="swiper-pagination"></div>
+    			<!-- 跑條 -->
+    			<div class="seek_bar">
+    				<!-- js控制這裡 left從 -100 到 0 ，換slide時變 100% -->
+    				<div class="seek_line" id="js-seek-line"></div>
+    			</div>
+    			<!-- 總數 -->
+    			<div id="seek_total"></div>
+
+    		</div>
+			<!-- Add Arrows -->
+		    <div class="swiper-button-next"><i class="fas fa-chevron-left"></i></i></div>
+		    <div class="swiper-button-prev"><i class="fas fa-chevron-right"></i></div>
+		</div>
+    </div>
+    <script>
+    	var progressAnimate = $("#js-seek-line");
+		var productSwiper = new Swiper('#products .swiper-container', {
+	      spaceBetween: 40,
+	      slidesPerView: 'auto',
+	      speed:1000,
+	      loop:true,
+	      autoplay: {
+	      	// 防止點擊後自動播放停止
+        	disableOnInteraction: false,
+          },
+	      navigation: {
+	        nextEl: '.swiper-button-next',
+	        prevEl: '.swiper-button-prev',
+	      },
+	      pagination: {
+	        el: '.swiper-pagination',
+	      },
+	      on:{
+	      	transitionStart: function(){
+	      		// alert('过渡開始');
+	      		progressAnimate.addClass("change");
+		    },
+	      	transitionEnd: function(){
+	      		// alert('过渡结束');
+	      		progressAnimate.removeClass("change");
+	      		progressAnimate.addClass("start");
+		    },
+	      }
+	    });
+	</script>
+	<script>
+		// 藉由分頁器取得slide數量，來製作進度條
+		var itemLength = document.querySelectorAll('.swiper-pagination-bullet');
+		var itemTotal = document.getElementById('seek_total');
+		if(itemLength.length < 10){
+			itemTotal.innerText = "0" + itemLength.length;
+		}else{
+			itemTotal.innerText = itemLength.length;
+		}
+		// console.log(itemLength.length);
+
+		//替分頁器加數字
+		itemLength.forEach(function(num,index){
+			var progressNum = index + 1;
+			if(progressNum < 10){
+				num.innerText = "0"+ progressNum;
+			}else{
+				num.innerText = progressNum;
+			}
+			
+		})
+		var proNum = document.querySelectorAll('.product-item .productIndex');
+		proNum.forEach(function(num){
+			// 取得 父元素的index值 帶到 span內
+				var proNumber = Number(num.parentElement.parentElement.parentElement.getAttribute('data-swiper-slide-index')) + 1;
+				if(proNumber < 10){
+					num.innerText = "0"+ proNumber ;
+				}else{
+					num.innerText = proNumber;
+				}
+				
+		})
+
+		
+	</script>
+</body>
+</html>
