@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <script src="twitchapi.js"></script> -->
+    <link rel="stylesheet" href="twitch.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Twitch API 練習 - Game Live </h1>
+        
+        <div id="seatchGame">
+            <h3>請選擇直播遊戲項目:</h3>
+            <a id="lol" href="javascript:;">LOL</a>
+            <a id="poe" href="javascript:;">POE</a>
+        </div>
+
+        <div id="twitchbox" class="container">
+            
+            <!-- <div class="item">
+                <div class="photo">
+                    <img src="${dataObj[i].preview.medium}" alt="">
+                    <p class="people">觀眾人數:${dataObj[i].viewers}</p>
+                    <p class="liveicon">LIVE</p>
+                    <a href="">${dataObj[i].channel.url}</a>
+                </div>
+                <div class="info">
+                    <p class="title">${dataObj[i].channel.status}</p>
+                    <p class="user">${dataObj[i].channel.name}</p>
+                </div>
+            </div> -->
+            
+        </div>
+    </div>
+    <script>
+        let twitchcontent = document.getElementById('twitchbox');
+
+        var request = new XMLHttpRequest();
+        let client = 'tcdiphdkeg9vvpkj42qngdy4jo5xhb';
+        let game_name = '';
+        let game_num = 6;
+        let lolBtn = document.getElementById('lol');
+        let poeBtn = document.getElementById('poe');
+
+        lolBtn.addEventListener('click',searchStrems);
+        poeBtn.addEventListener('click',searchStrems);
+
+        function searchStrems(e){
+            if(e.target.innerText == 'LOL'){
+                console.log('e.target是:',e.target.innerText);
+                game_name = 'League of Legends';
+                console.log('LOL',game_name);
+                getApi();
+            }
+            if(e.target.innerText == 'POE'){
+                console.log('e.target是:',e.target.innerText);
+                game_name = 'Path of Exile';
+                console.log('POE',game_name);
+                getApi();
+            }
+        }
+
+        function getApi(){
+            request.open('GET', `https://api.twitch.tv/kraken/streams/?game=${game_name}&limit=${game_num}`, true);
+            // 解決 cors 同源政策
+            request.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
+            request.setRequestHeader('Client-ID', client);
+            request.onload = function() {
+            if (request.status >= 200 && request.status < 400) {
+
+                // Success!
+                let dataObj = (JSON.parse(request.responseText)).streams;
+                console.log(dataObj[0]);
+                twitchcontent.innerHTML = '';
+                for(let i = 0 ; i < dataObj.length; i++){
+                    // dataObj[i].preview.medium 縮圖
+                    twitchcontent.innerHTML += 
+                    `
+                    <div class="item">
+                        <div class="photo">
+                            <img src="${dataObj[i].preview.medium}" alt="">
+                            <p class="people">觀眾人數:<span>${dataObj[i].viewers}</span></p>
+                            <p class="liveicon">LIVE</p>
+                            <a href="${dataObj[i].channel.url}"></a>
+                        </div>
+                        <div class="info">
+                            <p class="title">${dataObj[i].channel.status}</p>
+                            <p class="user">${dataObj[i].channel.name}</p>
+                        </div>
+                    </div>
+                    `
+                }
+            }
+            };
+            request.send();
+        }
+        
+    </script>
+    
+</body>
+</html>
