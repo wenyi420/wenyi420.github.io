@@ -14,26 +14,10 @@ h1{
     color:#5f5f5f;
     padding: 45px 0 10px;
 }
-input{
-    margin: 0px;
-    font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
-    
-    /* -webkit-appearance: none;會產生checkbox消失 */
-    /* Safari 和 Chrome 常用於 iOS 下移除內建樣式 */
-    -moz-appearance: none;
-    /* FireFox */
-    appearance: none;
-  /*以下移除 Chrome 產生的按鈕陰影*/
-    outline-style: none;
-    outline-width: 0px;
-    border: none;
-    border-style: none;
-    text-shadow: none;
-    -webkit-user-select: text;
-    outline-color: transparent;
-    box-shadow: none;
+input[type="text"]{
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+   -webkit-appearance: none;
+   border-radius: 0; 
 }
 
 .contanier{
