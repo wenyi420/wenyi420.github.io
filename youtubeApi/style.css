@@ -1,0 +1,120 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+html,body{font-size: "微軟正黑體";}
+img{
+    max-width: 100%;
+}
+.wrap{width: 100%;overflow: hidden;}
+header .container{border-bottom: 1px solid #cacaca;}
+.logo{width: 150px;}
+.container{width: 80%;margin: 0 auto;padding: 30px 0px;}
+
+.main{display: flex;}
+.main .l-box,
+.main .r-box{width: 50%;}
+
+.cateContent{padding: 30px 0px;border-bottom: 1px solid #cacaca;}
+.cateContent h2{font-size: 16px;padding-bottom: 20px;}
+.cate-list{display: flex;}
+.cate-list .item{margin-right: 5%; text-align: center;cursor: pointer;}
+.cate-list .item h3{padding-top: 10px;font-size: 14px; color: #525252;font-weight: normal;}
+.cate-list .item .icon{width: 80px;height: 80px;margin: 0 auto; border-radius: 50%;background: #525252;position: relative;}
+.cate-list .item .icon i{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 36px;
+    color: #fff;
+}
+
+#video{
+    padding: 0px 0px 30px;
+    border-bottom:1px solid #d0d0d0;
+}
+#video iframe{
+    width: 100%;
+    height: 40vh;
+    margin: 0 auto;
+}
+.video-list{display: flex;flex-wrap: wrap;padding: 0 0 0 30px}
+.video-list .noVids{width: 100%;text-align: center;padding-top: 20px;}
+.video-list .item{width: 50%;padding:0px 10px 0px;margin-bottom: 20px;position: relative;}
+.video-list .item .photo{position: relative;}
+.video-list .item .photo img{width: 100%;object-fit: cover;}
+.video-list .item .photo span{
+    position: absolute;
+    right: 4px;
+    bottom: 6%;
+    background: rgba(0, 0, 0, .8);
+    border-radius: 3px;
+    color: #fff;
+    padding: 2px 4px;
+    font-size: 12px;
+    font-family: sans-serif;
+}
+.video-list .item .title{
+    font-size: 14px;
+    color: #030303;
+    font-weight: normal;
+    padding-top: 7px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    /*指定第幾行超出時產生 ...*/
+    -webkit-line-clamp: 2;
+}
+.video-list .item .view{
+    font-size: 14px;
+    color: #606060;
+    padding-top: 10px;
+    font-family: sans-serif;
+}
+.video-list .item .vidLink{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+@media screen and (max-width:1280px){
+    .cate-list .item{margin-right: 3%;}
+}
+@media screen and (max-width:1180px){
+    .cate-list .item .icon{width: 60px;height: 60px;}
+    .cate-list .item .icon i{font-size: 26px;}
+}
+@media screen and (max-width:1024px){
+    .container{padding: 15px 0px;}
+    .cateContent{
+        padding: 10px 0px 25px;
+        margin-bottom: 25px;
+    }
+    .main{flex-wrap: wrap;}
+    .main .l-box, .main .r-box {
+        width: 100%;
+    }
+    .main .l-box{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column-reverse;
+    }
+    #video{padding: 0px 0px 25px;}
+    #video iframe{height: 60vh;}
+    
+    .video-list{padding: 25px 0px;margin: 0 -10px;}
+}
+@media screen and (max-width:480px){
+    .container{width: 90%;}
+    .cate-list .item .icon{width: 50px;height: 50px;}
+    .cate-list .item .icon i{font-size: 22px;}
+}
+@media screen and (max-width:374px){
+    .cate-list .item .icon{width: 45px;height: 45px;}
+}
