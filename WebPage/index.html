@@ -223,11 +223,12 @@
                 }
             });
             
-            let journalHeight = $(".journal").offset().top;
-            let productHeight = $(".product").offset().top;
-            let fixStop = journalHeight - 280 - productHeight;
+            
             $(window).scroll(function(){
-                var scrollVal = $(this).scrollTop();
+                let scrollVal = $(this).scrollTop();
+                let journalHeight = $(".journal").offset().top;
+                let productHeight = $(".product").offset().top;
+                let fixStop = journalHeight - 280 - productHeight;
                 if(journalHeight - 480 < scrollVal){
                     $(".fix").addClass("static").css("top",fixStop+"px");
                 }else{
