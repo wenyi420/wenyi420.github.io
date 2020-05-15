@@ -47,6 +47,11 @@
 
 <script>
   export default {
+    data() {
+      return {
+        beforeEdit: ""
+      };
+    },
     props: {
       index: {
         type: Number,
@@ -86,6 +91,16 @@
             edit: false
           }
         });
+      },
+      saveBeforeEdit() {
+        console.log("save");
+        this.beforeEdit = this.todo.content;
+      },
+      cancleEdit() {
+        console.log("cancle");
+        this.todo.content = this.beforeEdit;
+        this.beforeEdit = "";
+        this.todo.edit = false;
       }
     }
   };

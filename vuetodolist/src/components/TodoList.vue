@@ -18,7 +18,10 @@
       >完成 ({{completeLength}})</span>
     </div>
     <div class="main">
-      <transition-group name="fade">
+      <transition-group
+        name="bounce"
+        tag="p"
+      >
         <TodoListItem
           class="fade-item"
           v-for="index in loadIndex"
@@ -90,13 +93,22 @@
       }
     }
   }
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 0.3s;
+  .bounce-enter-active {
+    animation: bounce-in 0.5s;
   }
-  .fade-enter,
-  .fade-leave-to {
-    opacity: 0;
+  .bounce-leave-active {
+    animation: bounce-in 0.5s reverse;
+  }
+  @keyframes bounce-in {
+    0% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1.5);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
   @media screen and (max-width: 480px) {
     .todo-list .tabs span {
