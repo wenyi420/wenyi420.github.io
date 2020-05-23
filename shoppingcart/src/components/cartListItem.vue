@@ -1,0 +1,133 @@
+<template>
+  <div class="item">
+    <div class="photo"><img
+        :src="item.movieImg"
+        alt=""
+      /></div>
+
+    <p class="title">{{ item.name }}</p>
+
+    <p class="quantity">
+      <span
+        class="quantity-btn decrease"
+        @click="changeAmount"
+      >-</span>
+      <input
+        type="text"
+        :value="item.Quantity"
+        disabled
+      >
+      <span
+        class="quantity-btn increase"
+        @click="changeAmount"
+      >+</span>
+    </p>
+    <p class="price">$ {{ item.price * item.Quantity }}</p>
+    <van-icon
+      class="
+        delete"
+      name="cross"
+      @click="deleteCartItem"
+    />
+  </div>
+</template>
+<script>
+  export default {
+    props: {
+      item: {
+        type: Object,
+        required: true
+      },
+      index: {
+        type: Number,
+        require: true
+      }
+    },
+    methods: {
+      changeAmount(event) {
+        let $vue = this.item;
+        console.log("元素本身為:", event.target);
+        if (event.target.classList.contains("decrease")) {
+          if ($vue.Quantity === 1) return;
+          $vue.Quantity--;
+        }
+        if (event.target.classList.contains("increase")) {
+          $vue.Quantity++;
+        }
+        let total = $vue.Quantity * $vue.price;
+        this.$store.commit("CHANGE_AMOUNT", {
+          id: $vue.id,
+          Quantity: $vue.Quantity,
+          totalPrice: total
+        });
+      },
+      deleteCartItem() {
+        this.$store.commit("DELETE_CART_ITEM", this.index);
+      }
+    }
+  };
+</script>
+<style lang="scss">
+  .cart-list .item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 15px;
+    margin-top: 15px;
+
+    .photo {
+      img {
+        width: 120px;
+      }
+    }
+    .title {
+      font-size: 28px;
+      width: 25%;
+    }
+    .price {
+      font-size: 24px;
+      color: red;
+    }
+    .delete {
+      font-size: 26px;
+      cursor: pointer;
+      padding: 7px;
+    }
+    .quantity {
+      display: flex;
+      align-items: center;
+      input {
+        border: 0px;
+        border-top: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+        height: 34px;
+        width: 35px;
+        text-align: center;
+      }
+
+      .quantity-btn {
+        display: inline-block;
+        width: 30px;
+        height: 34px;
+        line-height: 34px;
+        cursor: pointer;
+        border: 1px solid #eee;
+        font-size: 22px;
+        &:hover {
+          border-color: #706e6c;
+        }
+        &.increase {
+          border-top-right-radius: 5px;
+          border-bottom-right-radius: 5px;
+        }
+        &.decrease {
+          border-top-left-radius: 5px;
+          border-bottom-left-radius: 5px;
+        }
+      }
+    }
+  }
+  .item + .item {
+    border-top: 1px solid #eee;
+  }
+</style>
