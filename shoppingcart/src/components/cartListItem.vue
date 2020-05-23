@@ -1,9 +1,17 @@
 <template>
   <div class="item">
-    <div class="photo"><img
-        :src="item.movieImg"
+    <div class="photo">
+      <img
+        v-if="item.movieImg"
+        :src="'https://image.tmdb.org/t/p/w500/'+item.movieImg"
         alt=""
-      /></div>
+      />
+      <img
+        v-else
+        alt="找不到該圖片"
+        src="https://images.pexels.com/photos/33129/popcorn-movie-party-entertainment.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      />
+    </div>
 
     <p class="title">{{ item.name }}</p>
 

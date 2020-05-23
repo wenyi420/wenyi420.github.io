@@ -2,21 +2,35 @@
   <div class="item">
     <div class="photo">
       <a :href="'#/movies/' + movie.id">
-        <img :src="movie.movieImg" />
+        <img
+          v-if="movie.poster_path"
+          :src="'https://image.tmdb.org/t/p/w500/'+movie.poster_path"
+        />
+        <img
+          v-else
+          alt="找不到該圖片"
+          src="https://images.pexels.com/photos/33129/popcorn-movie-party-entertainment.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+        />
       </a>
     </div>
     <div class="info">
-      <h3 class="title">{{ movie.name }}</h3>
-      <p class="time">上映日期：{{movie.time}}</p>
+      <h3 class="title">{{ movie.title }}</h3>
+      <p class="time">上映日期：{{movie.release_date}}</p>
       <p class="price">
-        售價：<span>${{ movie.price }}</span>
+        售價：<span>$ 50</span>
         <!-- <van-icon
           class="buyicon"
           name="shopping-cart"
           @click="addMovie"
         /> -->
       </p>
-      <p class="desc">{{movie.content}}</p>
+      <div class="desc">
+        <p v-if="movie.overview !== ''">{{movie.overview}}</p>
+        <p
+          v-else
+          class="noDesc"
+        >無相關資料</p>
+      </div>
       <div class="btn">
         <van-button
           type="warning"
@@ -50,6 +64,12 @@
       // }
       goPage() {
         this.$router.push(`/movies/${this.movie.id}`);
+      },
+      replaceByDefault() {
+        // console.log("showerrImg");
+        // e.target.src =
+        //   "https://images.pexels.com/photos/33129/popcorn-movie-party-entertainment.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500";
+        console.log("Image failed to load");
       }
     }
   };
@@ -83,7 +103,7 @@
         img {
           display: block;
           height: 450px;
-          object-fit: fill;
+          object-fit: cover;
           width: 100%;
         }
 
@@ -111,6 +131,9 @@
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
         margin: 15px 0px;
+      }
+      .noDesc {
+        height: 43px;
       }
       .price {
         text-align: right;

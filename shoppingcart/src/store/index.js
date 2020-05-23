@@ -2,13 +2,54 @@ import Vue from "vue";
 import Vuex from "vuex";
 import { Toast } from "vant";
 import VueRouter from "vue-router";
+import axios from "axios";
 
 Vue.use(Vuex);
 Vue.use(VueRouter);
+
+const apiKey = "ccc4da600602f73cf752066796a150b0";
+const baseURL = "https://api.themoviedb.org/3";
+
+let DeallInter = axios.create({});
+DeallInter.interceptors.request.use(
+  (config) => {
+    // 發起請求前執行什麼
+    Toast.loading({
+      mask: false,
+      duration: 0, // 一直存在
+      forbidClick: true, //禁止點擊
+      message: "加載中...",
+    });
+    return config;
+  },
+  (err) => {
+    // 請求錯誤
+    Toast.clear();
+    Toast("請求錯誤, 請稍後重試request");
+    console.log(err);
+  }
+);
+
+// 響應攔截器
+DeallInter.interceptors.response.use(
+  (res) => {
+    // 請求成功
+    Toast.clear();
+    return res;
+  },
+  (err) => {
+    // 請求錯誤
+    Toast.clear();
+    Toast("請求錯誤, 請稍後重試responce2");
+    console.log(err);
+  }
+);
+
 export default new Vuex.Store({
   state: {
     movieList: [],
     cartList: [],
+    tagList: [],
     customerInfo: {},
     searchTag: "all",
     searchName: "",
@@ -20,22 +61,73 @@ export default new Vuex.Store({
       Toast.success("已成功加入購物車");
     },
     Get_Movie_List(state) {
-      Vue.axios
-        .get("https://vueshopcart.herokuapp.com/movies")
+      DeallInter.get(`${baseURL}/discover/movie`, {
+        params: {
+          api_key: apiKey,
+          language: "zh-TW",
+          sort_by: "popularity.desc",
+          page: 1,
+        },
+      })
         .then((res) => {
-          console.log("movielist為:", res.data);
-          state.movieList = res.data;
+          state.movieList = res.data.results;
         })
         .catch((err) => {
           console.log(err);
         });
     },
+    GET_TAGS(state) {
+      axios
+        .get(`${baseURL}/genre/movie/list`, {
+          params: {
+            api_key: apiKey,
+            language: "zh-TW",
+          },
+        })
+        .then((res) => {
+          state.tagList = res.data.genres;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
     Get_Movie_TAG_List(state, tag) {
-      state.searchTag = tag;
+      // state.searchTag = tag;
+      DeallInter.get(`${baseURL}/discover/movie`, {
+        params: {
+          api_key: apiKey,
+          sort_by: "popularity.desc",
+          page: 1,
+          with_genres: tag,
+          language: "zh-TW",
+        },
+      })
+        .then((res) => {
+          state.movieList = res.data.results;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    SEARCH_MOVIES(state, name) {
+      DeallInter.get(`${baseURL}/search/movie`, {
+        params: {
+          api_key: apiKey,
+          language: "zh-TW",
+          query: name,
+        },
+      })
+        .then((res) => {
+          state.movieList = res.data.results;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     Get_Movie_DETAIL(state, id) {
       state.detail = "";
-      Vue.axios
+      axios
         .get("https://vueshopcart.herokuapp.com/movies", {
           params: {
             id: id,
@@ -70,10 +162,6 @@ export default new Vuex.Store({
       // 清空購物車
       state.cartList = [];
     },
-    SEARCH_MOVIES(state, name) {
-      state.searchTag = "";
-      state.searchName = name;
-    },
   },
   getters: {
     getCartNum(state) {
@@ -85,6 +173,9 @@ export default new Vuex.Store({
     getMovieList(state) {
       console.log("執行getter");
       return state.movieList;
+    },
+    getTagList(state) {
+      return state.tagList;
     },
     getMovieDetail(state) {
       console.log("detail geter");
@@ -100,9 +191,9 @@ export default new Vuex.Store({
     },
     getFilterTag(state) {
       return state.movieList.filter((item) => {
-        if (state.searchTag == "") {
-          return item.name.includes(state.searchName);
-        }
+        // if (state.searchTag == "") {
+        //   return item.name.includes(state.searchName);
+        // }
         if (state.searchTag == "all") {
           return state.movieList;
         }
