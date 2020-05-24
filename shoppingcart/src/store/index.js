@@ -54,6 +54,9 @@ export default new Vuex.Store({
     searchTag: "all",
     searchName: "",
     detail: null,
+    Authorization: localStorage.getItem("Authorization")
+      ? localStorage.getItem("Authorization")
+      : "",
   },
   mutations: {
     ADD_MOVIE(state, payload) {
@@ -125,21 +128,7 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
-    Get_Movie_DETAIL(state, id) {
-      state.detail = "";
-      axios
-        .get("https://vueshopcart.herokuapp.com/movies", {
-          params: {
-            id: id,
-          },
-        })
-        .then((res) => {
-          state.movieList = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
+
     CHANGE_AMOUNT(state, payload) {
       state.cartList.filter((item) => {
         if (item.id === payload.id) {
@@ -161,6 +150,12 @@ export default new Vuex.Store({
       };
       // 清空購物車
       state.cartList = [];
+    },
+    GET_TOKEN(state) {
+      let token = parseInt(Math.random() * 100);
+      state.Authorization = token;
+
+      localStorage.setItem("Authorization", token);
     },
   },
   getters: {

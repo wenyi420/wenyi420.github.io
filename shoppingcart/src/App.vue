@@ -4,6 +4,7 @@
       <a class="logo" href="javascript:;" @click="goHome">MOVIE SHOP</a>
       <div class="nav-right">
         <router-link to="/">首頁</router-link>
+        <router-link to="/admin/orderList">後台管理</router-link>
         <button class="icon">
           <van-icon
             name="shopping-cart chat-o"

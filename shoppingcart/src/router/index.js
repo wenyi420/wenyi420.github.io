@@ -11,6 +11,23 @@ const routes = [
     component: movieList,
   },
   {
+    path: "/login",
+    name: "login",
+    component: () => import("@/views/login.vue"),
+  },
+  {
+    path: "/admin",
+    name: "admin",
+    component: () => import("@/views/admin.vue"),
+    children: [
+      {
+        path: "orderList",
+        name: "orderList",
+        component: () => import("@/views/orderList.vue"),
+      },
+    ],
+  },
+  {
     path: "/movies/:movieID",
     name: "movieDetail",
     component: () => import("@/views/movieDetail.vue"),
