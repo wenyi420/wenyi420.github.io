@@ -83,6 +83,7 @@
     margin-top: 30px;
     border: 1px solid #eee;
     .info {
+      margin-top: 45px;
       text-align: right;
       span {
         color: red;
@@ -94,5 +95,11 @@
     display: flex;
     justify-content: space-between;
     padding: 30px;
+  }
+  @media screen and (max-width: 1024px) {
+    .cart-list {
+      margin-top: 60px;
+      padding: 2% 5%;
+    }
   }
 </style>

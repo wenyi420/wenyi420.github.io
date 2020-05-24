@@ -10,4 +10,9 @@
     margin-top: 15px;
     border-top: 1px solid #eee;
   }
+  @media screen and (max-width: 414px) {
+    footer {
+      font-size: 14px;
+    }
+  }
 </style>

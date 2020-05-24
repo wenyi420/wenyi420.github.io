@@ -4,7 +4,7 @@
       <a :href="'#/movies/' + movie.id">
         <img
           v-if="movie.poster_path"
-          :src="'https://image.tmdb.org/t/p/w500/'+movie.poster_path"
+          :src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
         />
         <img
           v-else
@@ -15,7 +15,7 @@
     </div>
     <div class="info">
       <h3 class="title">{{ movie.title }}</h3>
-      <p class="time">上映日期：{{movie.release_date}}</p>
+      <p class="time">上映日期：{{ movie.release_date }}</p>
       <p class="price">
         售價：<span>$ 50</span>
         <!-- <van-icon
@@ -25,7 +25,7 @@
         /> -->
       </p>
       <div class="desc">
-        <p v-if="movie.overview !== ''">{{movie.overview}}</p>
+        <p v-if="movie.overview !== ''">{{ movie.overview }}</p>
         <p
           v-else
           class="noDesc"
@@ -77,10 +77,9 @@
 
 <style scoped lang="scss">
   .item {
-    width: 30%;
+    width: 33.3333333%;
     position: relative;
-    border: 1px solid #eee;
-    margin: 0 15px 45px;
+    padding: 0 15px 45px;
     .photo {
       a {
         display: block;
@@ -102,7 +101,7 @@
 
         img {
           display: block;
-          height: 450px;
+          height: 500px;
           object-fit: cover;
           width: 100%;
         }
@@ -116,6 +115,7 @@
     .info {
       text-align: left;
       padding: 10px 15px;
+      border: 1px solid #eee;
       .title {
         text-align: left;
         font-size: 20px;
@@ -146,6 +146,44 @@
       }
       .btn {
         text-align: right;
+      }
+    }
+  }
+
+  @media screen and (max-width: 1580px) {
+    .item .photo a img {
+      height: 400px;
+    }
+  }
+  @media screen and (max-width: 1280px) {
+    .item .photo a img {
+      height: 300px;
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
+    .item {
+      width: 50%;
+      .photo a img {
+        height: 400px;
+      }
+    }
+  }
+  @media screen and (max-width: 414px) {
+    .item {
+      padding: 0 5px 45px;
+      .info {
+        .title {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .time {
+          display: none;
+        }
+      }
+      .photo a img {
+        height: 270px;
       }
     }
   }

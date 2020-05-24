@@ -69,10 +69,12 @@
   img {
     max-width: 100%;
   }
-  .contanier {
+
+  .container {
     width: 980px;
     margin: 0 auto;
   }
+
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -84,7 +86,7 @@
 
   #nav {
     z-index: 99;
-    padding: 25px 7%;
+    padding: 25px 10%;
     position: fixed;
     top: 0px;
     width: 100%;
@@ -134,6 +136,22 @@
     }
     .logo {
       font-size: 28px;
+    }
+  }
+  @media screen and (max-width: 1024px) {
+    #nav {
+      padding: 25px 5%;
+    }
+    .container {
+      width: 90%;
+    }
+  }
+  @media screen and (max-width: 940px) {
+    #app {
+      padding-top: 100px;
+    }
+    #nav .logo {
+      margin: 0px;
     }
   }
 </style>

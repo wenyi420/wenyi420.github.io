@@ -1,6 +1,6 @@
 <template>
   <div class="item">
-    <div class="photo">
+    <div class="photo item-left">
       <img
         v-if="item.movieImg"
         :src="'https://image.tmdb.org/t/p/w500/'+item.movieImg"
@@ -12,31 +12,37 @@
         src="https://images.pexels.com/photos/33129/popcorn-movie-party-entertainment.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
       />
     </div>
-
-    <p class="title">{{ item.name }}</p>
-
-    <p class="quantity">
-      <span
-        class="quantity-btn decrease"
-        @click="changeAmount"
-      >-</span>
-      <input
-        type="text"
-        :value="item.Quantity"
-        disabled
-      >
-      <span
-        class="quantity-btn increase"
-        @click="changeAmount"
-      >+</span>
-    </p>
-    <p class="price">$ {{ item.price * item.Quantity }}</p>
-    <van-icon
-      class="
+    <div class="item-right">
+      <p class="title">{{ item.name }}</p>
+      <p class="quantity">
+        <span
+          class="quantity-btn decrease"
+          @click="changeAmount"
+        >-</span>
+        <input
+          type="text"
+          :value="item.Quantity"
+          disabled
+        >
+        <span
+          class="quantity-btn increase"
+          @click="changeAmount"
+        >+</span>
+      </p>
+      <p class="price">$ {{ item.price * item.Quantity }}</p>
+      <!-- <van-icon
+        class="
         delete"
-      name="cross"
-      @click="deleteCartItem"
-    />
+        name="cross"
+        @click="deleteCartItem"
+      /> -->
+      <van-icon
+        name="clear"
+        class="
+        delete"
+        @click="deleteCartItem"
+      />
+    </div>
   </div>
 </template>
 <script>
@@ -88,54 +94,99 @@
         width: 120px;
       }
     }
-    .title {
-      font-size: 28px;
-      width: 25%;
-    }
-    .price {
-      font-size: 24px;
-      color: red;
-    }
-    .delete {
-      font-size: 26px;
-      cursor: pointer;
-      padding: 7px;
-    }
-    .quantity {
+    .item-right {
       display: flex;
+      width: 100%;
+      padding-left: 15px;
+      justify-content: space-between;
       align-items: center;
-      input {
-        border: 0px;
-        border-top: 1px solid #eee;
-        border-bottom: 1px solid #eee;
-        height: 34px;
-        width: 35px;
-        text-align: center;
+      .title {
+        font-size: 28px;
+        width: 25%;
       }
-
-      .quantity-btn {
-        display: inline-block;
-        width: 30px;
-        height: 34px;
-        line-height: 34px;
+      .price {
+        font-size: 24px;
+        color: red;
+      }
+      .delete {
+        font-size: 26px;
         cursor: pointer;
-        border: 1px solid #eee;
-        font-size: 22px;
-        &:hover {
-          border-color: #706e6c;
+        padding: 7px;
+      }
+      .quantity {
+        display: flex;
+        align-items: center;
+        input {
+          border: 0px;
+          border-top: 1px solid #eee;
+          border-bottom: 1px solid #eee;
+          height: 34px;
+          width: 35px;
+          text-align: center;
         }
-        &.increase {
-          border-top-right-radius: 5px;
-          border-bottom-right-radius: 5px;
-        }
-        &.decrease {
-          border-top-left-radius: 5px;
-          border-bottom-left-radius: 5px;
+
+        .quantity-btn {
+          display: inline-block;
+          width: 30px;
+          height: 34px;
+          line-height: 34px;
+          cursor: pointer;
+          border: 1px solid #eee;
+          font-size: 22px;
+          &:hover {
+            border-color: #706e6c;
+          }
+          &.increase {
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+          }
+          &.decrease {
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+          }
         }
       }
     }
   }
   .item + .item {
     border-top: 1px solid #eee;
+  }
+
+  @media screen and (max-width: 540px) {
+    .cart-list .item {
+      align-items: flex-start;
+      padding-top: 25px;
+      margin-top: 25px;
+      .item-right {
+        padding-left: 30px;
+        flex-wrap: wrap;
+        position: relative;
+        .delete,
+        .price,
+        .quantity {
+          width: 100%;
+        }
+        .title {
+          width: 80%;
+          font-size: 24px;
+          padding-right: 10px;
+        }
+        .title,
+        .price {
+          text-align: left;
+        }
+        .quantity {
+          justify-content: flex-start;
+          padding: 15px 0px;
+        }
+        .delete {
+          position: absolute;
+          right: 0px;
+          top: 0px;
+          font-size: 36px;
+          text-align: right;
+        }
+      }
+    }
   }
 </style>

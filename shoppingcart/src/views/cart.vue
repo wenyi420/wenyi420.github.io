@@ -68,4 +68,10 @@
       color: #bbb;
     }
   }
+  @media screen and (max-width: 414px) {
+    .cart-progress .progress-item .progress-status {
+      width: 100%;
+      font-size: 14px;
+    }
+  }
 </style>
