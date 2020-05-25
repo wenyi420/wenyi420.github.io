@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>客戶訂單列表</h1>
+    <h1 class="pageTitle">客戶訂單列表</h1>
     <div class="orderList">
       <orderListItem
         v-for="item in orderListData"
@@ -43,3 +43,9 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.orderList {
+  border: 1px solid #969799;
+  margin-top: 30px;
+}
+</style>

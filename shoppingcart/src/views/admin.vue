@@ -16,3 +16,9 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.pageTitle {
+  text-align: left;
+  font-size: 2rem;
+}
+</style>

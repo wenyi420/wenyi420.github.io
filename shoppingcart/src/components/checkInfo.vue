@@ -19,8 +19,7 @@
       <h3 class="customer">訂購人資料</h3>
       <div class="info">
         <p class="item">
-          <span class="title">訂購日期：</span
-          ><span>{{ CustomerInfo.time }}</span>
+          <span class="title">訂購日期：</span><span>{{ CustomerInfo.time }}</span>
         </p>
         <p class="item">
           <span class="title">姓名：</span><span>{{ CustomerInfo.name }}</span>
@@ -33,69 +32,73 @@
         </p>
       </div>
     </div>
-    <van-button type="primary" @click="goHome">繼續選購</van-button>
+    <van-button
+      type="primary"
+      @click="goHome"
+    >繼續選購</van-button>
     <Footer />
   </div>
 </template>
 
 <script>
-import Footer from "@/components/Footer.vue";
-export default {
-  components: {
-    Footer,
-  },
-  computed: {
-    CustomerInfo() {
-      return this.$store.getters.getCustomerInfo;
+  import Footer from "@/components/Footer.vue";
+  export default {
+    components: {
+      Footer
     },
-  },
-  beforeCreate() {
-    let cartlist = this.$store.getters.getCartList;
-    if (cartlist.length === 0) {
-      console.log("no cartlist");
-      this.$router.push("/cart/cartList");
-    } else {
-      console.log("yes cart");
+    computed: {
+      CustomerInfo() {
+        return this.$store.getters.getCustomerInfo;
+      }
+    },
+    beforeCreate() {
+      let hasOrder = this.$store.state.hasOrder;
+      if (!hasOrder) {
+        console.log("no cartlist");
+        this.$router.push("/cart/cartList");
+      } else {
+        console.log("yes cart");
+      }
+    },
+    methods: {
+      goHome() {
+        this.$store.commit('CANCLE_HASORDER')
+        this.$router.push("/");
+      }
     }
-  },
-  methods: {
-    goHome() {
-      this.$router.push("/");
-    },
-  },
-};
+  };
 </script>
 
 <style lang="scss">
-.checkInfo {
-  margin: 40px 0px;
-  h2 {
-    margin-bottom: 30px;
-  }
-  .info {
-    max-width: 480px;
-    margin: 20px auto 0px;
-    border: 1px solid #eee;
-    border-radius: 3px;
-    padding: 4% 4%;
-    box-shadow: -1px -1px 10px 0px #eee;
-    .item {
-      padding: 15px 0px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      width: 82%;
-      margin: 0 auto;
-      .title {
-        padding-right: 15px;
-        width: 120px;
-        text-align: left;
-        font-weight: bold;
+  .checkInfo {
+    margin: 40px 0px;
+    h2 {
+      margin-bottom: 30px;
+    }
+    .info {
+      max-width: 480px;
+      margin: 20px auto 0px;
+      border: 1px solid #eee;
+      border-radius: 3px;
+      padding: 4% 4%;
+      box-shadow: -1px -1px 10px 0px #eee;
+      .item {
+        padding: 15px 0px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 82%;
+        margin: 0 auto;
+        .title {
+          padding-right: 15px;
+          width: 120px;
+          text-align: left;
+          font-weight: bold;
+        }
+      }
+      .item + .item {
+        border-top: 1px solid #eee;
       }
     }
-    .item + .item {
-      border-top: 1px solid #eee;
-    }
   }
-}
 </style>

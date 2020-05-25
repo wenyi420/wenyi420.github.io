@@ -53,6 +53,7 @@ export default new Vuex.Store({
     customerInfo: {},
     searchTag: "all",
     searchName: "",
+    hasOrder: false,
     detail: null,
     Authorization: localStorage.getItem("Authorization")
       ? localStorage.getItem("Authorization")
@@ -150,12 +151,16 @@ export default new Vuex.Store({
       };
       // 清空購物車
       state.cartList = [];
+      state.hasOrder = true;
     },
     GET_TOKEN(state) {
       let token = parseInt(Math.random() * 100);
       state.Authorization = token;
 
       localStorage.setItem("Authorization", token);
+    },
+    CANCLE_HASORDER(state) {
+      state.hasOrder = false;
     },
   },
   getters: {

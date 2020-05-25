@@ -18,11 +18,7 @@
       <p class="time">上映日期：{{ movie.release_date }}</p>
       <p class="price">
         售價：<span>$ 50</span>
-        <!-- <van-icon
-          class="buyicon"
-          name="shopping-cart"
-          @click="addMovie"
-        /> -->
+
       </p>
       <div class="desc">
         <p v-if="movie.overview !== ''">{{ movie.overview }}</p>
@@ -51,25 +47,8 @@
     },
 
     methods: {
-      // addMovie() {
-      //   console.log(this.movie.id);
-      //   this.$store.commit("ADD_MOVIE", {
-      //     id: this.movie.id,
-      //     name: this.movie.name,
-      //     price: this.movie.price,
-      //     totalPrice: this.movie.price,
-      //     Quantity: 1,
-      //     movieImg: this.movie.movieImg
-      //   });
-      // }
       goPage() {
         this.$router.push(`/movies/${this.movie.id}`);
-      },
-      replaceByDefault() {
-        // console.log("showerrImg");
-        // e.target.src =
-        //   "https://images.pexels.com/photos/33129/popcorn-movie-party-entertainment.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500";
-        console.log("Image failed to load");
       }
     }
   };
@@ -120,6 +99,9 @@
         text-align: left;
         font-size: 20px;
         letter-spacing: 1px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
       .time {
         padding: 10px 0px;

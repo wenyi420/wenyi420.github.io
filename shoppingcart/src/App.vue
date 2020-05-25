@@ -62,10 +62,13 @@ div {
   font-family: "微軟正黑體";
 }
 a {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 ul {
   list-style: none;
+}
+button {
+  outline: none !important;
 }
 img {
   max-width: 100%;
@@ -100,6 +103,7 @@ img {
     color: #fff;
     margin: 0 15px;
     position: relative;
+
     &.icon {
       font-size: 25px;
     }
@@ -153,6 +157,19 @@ img {
   }
   #nav .logo {
     margin: 0px;
+  }
+}
+@media screen and (max-width: 414px) {
+  #nav .nav-right a {
+    margin: 0 10px;
+  }
+  #nav .logo {
+    font-size: 24px;
+  }
+}
+@media screen and (max-width: 375px) {
+  #nav .logo {
+    font-size: 18px;
   }
 }
 </style>
