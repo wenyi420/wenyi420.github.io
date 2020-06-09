@@ -1,6 +1,7 @@
 import Vue from "vue";
 import axios from "axios";
 import App from "./App.vue";
+import Http from "./service/movieAPI/http";
 import router from "./router";
 import store from "./store";
 import { BootstrapVue, BootstrapVueIcons } from "bootstrap-vue";
@@ -12,6 +13,7 @@ Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
 
 Vue.prototype.$axios = axios;
+Vue.prototype.$Http = Http;
 Vue.config.productionTip = false;
 new Vue({
   router,

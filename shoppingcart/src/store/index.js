@@ -64,22 +64,23 @@ export default new Vuex.Store({
       state.cartList.push(payload);
       Toast.success("已成功加入購物車");
     },
-    Get_Movie_List(state) {
-      DeallInter.get(`${baseURL}/discover/movie`, {
-        params: {
-          api_key: apiKey,
-          language: "zh-TW",
-          sort_by: "popularity.desc",
-          page: 1,
-        },
-      })
-        .then((res) => {
-          state.movieList = res.data.results;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
+    // Get_Movie_List(state) {
+    //   DeallInter.get(`${baseURL}/discover/movie`, {
+    //     params: {
+    //       api_key: apiKey,
+    //       language: "zh-TW",
+    //       sort_by: "popularity.desc",
+    //       page: 1,
+    //     },
+    //   })
+    //     .then((res) => {
+    //       state.movieList = res.data.results;
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // },
+
     GET_TAGS(state) {
       axios
         .get(`${baseURL}/genre/movie/list`, {
