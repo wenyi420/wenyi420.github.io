@@ -630,7 +630,6 @@ header.open {
     &__bg {
       background-image: url(https://images.pexels.com/photos/3457334/pexels-photo-3457334.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940);
       width: 100%;
-      background-attachment: fixed;
       background-position: center;
       background-position: center;
       background-size: cover;
@@ -639,6 +638,7 @@ header.open {
 
       @include mediaquery_mobile {
         height: 70vh;
+        background-attachment: fixed;
       }
     }
     &__content {
