@@ -23,7 +23,8 @@
             placeholder="Password"
           />
         </div>
-        <van-button type="info" @click="compareData">登入</van-button>
+        <!-- <van-button type="info">登入</van-button> -->
+        <el-button type="primary"  @click="compareData">登入</el-button>
       </div>
     </div>
   </div>

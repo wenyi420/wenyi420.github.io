@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="main">
-      <sideNav class="sidenav" />
+      <sideNav class="sidenav" @searchTagMovie="searchTag" :Movietags="Movietags" />
       <div class="movie-list">
         <div class="search-movie">
           <input
@@ -15,12 +15,24 @@
           >搜尋</van-button>
         </div>
         <movieitem
-          v-for="movie in renderMovie"
+          v-for="movie in movies"
           :movie="movie"
           :key="movie.id"
         />
+        <div class="block pagination" v-show="!hasSearch">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page.sync="currentPage"
+            background
+            layout="prev, pager, next"
+            :total="1000">
+          </el-pagination>
+        </div>
       </div>
+      
     </div>
+    
     <Footer />
   </div>
 </template>
@@ -29,20 +41,26 @@
   import sideNav from "@/components/sideNav.vue";
   import Footer from "@/components/Footer.vue";
   import movieitem from "@/components/movieItem.vue";
-
   import Vue from "vue";
   import { Button } from "vant";
   import { Tag } from "vant";
+  import { Pagination } from 'element-ui';
+
+  import { apiGetPopularMovie, apiGetMovieTags, apiSearchMovie } from '@/apis/movie.js';
 
   Vue.use(Tag);
   Vue.use(Button);
-
+  Vue.use(Pagination);
   export default {
     name: "moveList",
     data() {
       return {
         searchTxt: "",
-        hasSearch: false
+        movies:[],
+        currentPage: 1,
+        Movietags:[],
+        hasSearchTag:null,
+        hasSearch:false,
       };
     },
     components: {
@@ -52,25 +70,48 @@
     },
 
     methods: {
-      addCart() {
-        alert("已加入");
+      handleCurrentChange(val) {
+        console.log(`當前頁數: ${val}`);
+        let tag = this.hasSearchTag;
+        
+        apiGetPopularMovie(val, tag).then((res) =>{
+          this.hasSearch = false;
+          this.movies = res.data.results;
+        
+        });
       },
+      searchTag(tag){
+        this.currentPage = 1;
+        this.hasSearchTag = tag;
+        apiGetPopularMovie(this.currentPage, tag).then((res) =>{
+          this.hasSearch = false;
+          this.movies = res.data.results;
+        });
+      },
+      
       searchMovie() {
-        console.log("searchtxt:", this.searchTxt);
         if (!this.searchTxt) return false;
-
-        this.$store.commit("SEARCH_MOVIES", this.searchTxt);
+        let name = this.searchTxt;
+        apiSearchMovie(name).then((res)=>{
+          this.hasSearch = true;
+          this.movies = res.data.results;
+          this.searchTxt = '';
+        })
       }
     },
     created() {
-      this.$store.commit("Get_Movie_List");
-      this.$store.commit("GET_TAGS");
-      console.log("created", this.$store.state.movieList);
+      apiGetPopularMovie().then((res) =>{
+        console.log('movie list',res.data.results);
+        this.movies = res.data.results;
+      });
+       apiGetMovieTags().then((res)=>{
+        console.log('tags: ',res.data.genres);
+        this.Movietags = res.data.genres;
+      })
+     
     },
     computed: {
-      renderMovie() {
-        return this.$store.getters.getFilterTag;
-      }
+     
     }
   };
 </script>
@@ -109,6 +150,10 @@
         font-size: 18px;
         margin-top: 15px;
         padding-bottom: 47vh;
+      }
+      .pagination{
+        justify-content: center;
+        width: 100%;
       }
     }
   }

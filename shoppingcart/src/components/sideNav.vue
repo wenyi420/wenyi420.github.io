@@ -8,7 +8,7 @@
       <div class="tags">
         <div
           class="tags-item"
-          v-for="tag in renderTags"
+          v-for="tag in Movietags"
           :key="tag.id"
         >
           <button
@@ -25,11 +25,22 @@
 
 <script>
   export default {
+    props:{
+      Movietags: {
+        type: Array,
+        required: true
+      }
+    },
+    created(){
+      
+    },
     methods: {
       searchTagMovie(event) {
         let tag = event.target.dataset.id;
         console.log("id=", tag);
-        this.$store.commit("Get_Movie_TAG_List", tag);
+        this.$emit('searchTagMovie', tag);
+        // this.$store.commit("Get_Movie_TAG_List", tag);
+
       },
       toggleTags(e) {
         e.target.classList.toggle("active");
@@ -39,9 +50,9 @@
       }
     },
     computed: {
-      renderTags() {
-        return this.$store.getters.getTagList;
-      }
+      // renderTags() {
+      //   return this.$store.getters.getTagList;
+      // }
     }
   };
 </script>
