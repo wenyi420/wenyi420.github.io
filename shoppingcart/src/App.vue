@@ -21,7 +21,6 @@
 <script>
 import Vue from "vue";
 import { Icon } from "vant";
-
 Vue.use(Icon);
 export default {
   data() {
@@ -73,12 +72,10 @@ button {
 img {
   max-width: 100%;
 }
-
 .container {
   width: 980px;
   margin: 0 auto;
 }
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -87,7 +84,6 @@ img {
   color: #2c3e50;
   padding-top: 120px;
 }
-
 #nav {
   z-index: 99;
   padding: 25px 10%;
@@ -103,7 +99,6 @@ img {
     color: #fff;
     margin: 0 15px;
     position: relative;
-
     &.icon {
       font-size: 25px;
     }

@@ -8,7 +8,7 @@
       <div class="tags">
         <div
           class="tags-item"
-          v-for="tag in renderTags"
+          v-for="tag in Movietags"
           :key="tag.id"
         >
           <button
@@ -25,11 +25,23 @@
 
 <script>
   export default {
+    props: {
+      Movietags: {
+        type: Array,
+        required: true
+      }
+    },
+    created() {},
     methods: {
       searchTagMovie(event) {
         let tag = event.target.dataset.id;
         console.log("id=", tag);
-        this.$store.commit("Get_Movie_TAG_List", tag);
+
+        this.$emit("searchTagMovie", tag);
+        let tagslist = document.querySelector(".tags");
+        let toggleTags = document.querySelector(".toggleTags");
+        toggleTags.classList.toggle("active");
+        tagslist.classList.toggle("active");
       },
       toggleTags(e) {
         e.target.classList.toggle("active");
@@ -38,17 +50,13 @@
         tagslist.classList.toggle("active");
       }
     },
-    computed: {
-      renderTags() {
-        return this.$store.getters.getTagList;
-      }
-    }
+    computed: {}
   };
 </script>
 
 <style lang="scss" scoped>
   .sidenav {
-    width: 25%;
+    width: 20%;
     .toggleTags {
       display: none;
       font-weight: bold;
@@ -79,9 +87,10 @@
     .tags {
       display: flex;
       flex-wrap: wrap;
+      margin-left: -7px;
       .tags-item {
-        width: 40%;
-        padding: 0% 15px 15px 0px;
+        width: 45%;
+        padding: 0 7px 15px;
         button {
           width: 100%;
           padding: 15px 0px;
@@ -128,7 +137,7 @@
         width: 33.333333%;
       }
       .tags .tags-item:nth-child(5n) {
-        padding-right: 15px;
+        padding-right: 7px;
       }
       .tags .tags-item:nth-child(3n) {
         padding-right: 0px;

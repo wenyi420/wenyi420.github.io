@@ -60,7 +60,6 @@
     methods: {
       changeAmount(event) {
         let $vue = this.item;
-        console.log("元素本身為:", event.target);
         if (event.target.classList.contains("decrease")) {
           if ($vue.Quantity === 1) return;
           $vue.Quantity--;

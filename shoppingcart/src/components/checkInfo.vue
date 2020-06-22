@@ -54,15 +54,12 @@
     beforeCreate() {
       let hasOrder = this.$store.state.hasOrder;
       if (!hasOrder) {
-        console.log("no cartlist");
         this.$router.push("/cart/cartList");
-      } else {
-        console.log("yes cart");
       }
     },
     methods: {
       goHome() {
-        this.$store.commit('CANCLE_HASORDER')
+        this.$store.commit("CANCLE_HASORDER");
         this.$router.push("/");
       }
     }

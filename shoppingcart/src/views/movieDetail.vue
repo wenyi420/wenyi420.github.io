@@ -36,7 +36,7 @@
 
 <script>
   import Footer from "@/components/Footer.vue";
-
+  import { apiGetMovieDetail } from "@/apis/movie.js";
   import Vue from "vue";
   import { Stepper } from "vant";
   import { Toast } from "vant";
@@ -54,50 +54,8 @@
       Footer
     },
     created() {
-      // 請求攔截器添加
-      let detailInter = this.$axios.create({});
-      detailInter.interceptors.request.use(
-        config => {
-          // 發起請求前執行什麼
-          Toast.loading({
-            mask: false,
-            duration: 0, // 一直存在
-            forbidClick: true, //禁止點擊
-            message: "加載中..."
-          });
-          return config;
-        },
-        err => {
-          // 請求錯誤
-          Toast.clear();
-          Toast("請求錯誤, 請稍後重試request");
-          console.log(err);
-        }
-      );
-
-      // 響應攔截器
-      detailInter.interceptors.response.use(
-        res => {
-          // 請求成功
-          Toast.clear();
-          return res.data;
-        },
-        err => {
-          // 請求錯誤
-          Toast.clear();
-          Toast("請求錯誤, 請稍後重試responce2");
-          console.log(err);
-        }
-      );
-
-      detailInter
-        .get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieID}`, {
-          params: {
-            api_key: "ccc4da600602f73cf752066796a150b0",
-            language: "zh-TW"
-          }
-        })
-        .then(response => (this.movie = response))
+      apiGetMovieDetail(this.$route.params.movieID)
+        .then(response => (this.movie = response.data))
         .catch(err => {
           console.log(err);
         });
@@ -122,7 +80,6 @@
 <style lang="scss">
   .movie-item {
     display: flex;
-    height: 70vh;
     justify-content: center;
     padding-top: 30px;
     .photo {
