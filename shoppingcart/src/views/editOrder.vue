@@ -75,7 +75,10 @@
           </b-col>
         </b-row>
       </b-container>
-      <div class="cart-list">
+      <div
+        class="cart-list"
+        v-if="orderMovieList"
+      >
         <editOrderMovies
           v-for="(item, index) in orderMovieList"
           :key="item.id"
@@ -102,8 +105,7 @@
 </template>
 
 <script>
-  import { Toast } from "vant";
-
+  import { apiGetOrderItem, apiUpdateOrderItem } from "@/apis/heroku.js";
   import editOrderMovies from "@/components/editOrderMovies.vue";
 
   export default {
@@ -117,18 +119,14 @@
     components: {
       editOrderMovies
     },
-
-    created() {
-      this.$axios
-        .get(
-          `https://vueshopcart.herokuapp.com/orderlist/${this.$route.params.orderID}`
-        )
+    beforeCreate() {
+      let id = this.$route.params.orderID;
+      apiGetOrderItem(id)
         .then(res => {
-          console.log("已取得", res);
           this.orderData = res.data;
           this.orderMovieList = res.data.movie;
         })
-        .catcg(err => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -141,7 +139,6 @@
         let theMoive = this.orderMovieList[obj.index];
         theMoive.Quantity = obj.Quantity;
         theMoive.totalPrice = obj.totalPrice;
-        //   this.orderData.totalPrice =
       },
       editUpdate() {
         let name = document.querySelector("#name").value;
@@ -151,57 +148,13 @@
         this.orderData.name = name;
         this.orderData.email = email;
         this.orderData.phone = phone;
-        //   this.orderData.totalPrice = this.getTotalPrice;
-        // 請求攔截器添加
-        let detailInter = this.$axios.create({});
-        detailInter.interceptors.request.use(
-          config => {
-            // 發起請求前執行什麼
-            Toast.loading({
-              mask: false,
-              duration: 0, // 一直存在
-              forbidClick: true, //禁止點擊
-              message: "加載中..."
-            });
-            return config;
-          },
-          err => {
-            // 請求錯誤
-            Toast.clear();
-            Toast("請求錯誤, 請稍後重試");
-            console.log(err);
-          }
-        );
 
-        // 響應攔截器
-        detailInter.interceptors.response.use(
-          res => {
-            // 請求成功
-            Toast.loading({
-              mask: false,
-              duration: 1, // 一直存在
-              forbidClick: true, //禁止點擊
-              message: "修改成功"
-            });
-            return res;
-          },
-          err => {
-            // 請求錯誤
-            Toast.clear();
-            Toast("請求錯誤, 請稍後重試");
-            console.log(err);
-          }
-        );
-        detailInter
-          .patch(
-            `https://vueshopcart.herokuapp.com/orderlist/${this.$route.params.orderID}`,
-            this.orderData
-          )
-          .then(res => {
-            console.log(res);
-            this.$router.push("/admin/orderList");
+        let id = this.$route.params.orderID;
+        apiUpdateOrderItem(id, this.orderData)
+          .then(() => {
+            this.goToBack();
           })
-          .catcg(err => {
+          .catch(err => {
             console.log(err);
           });
       },
@@ -222,7 +175,6 @@
     },
     watch: {
       getTotalPrice() {
-        console.log("totalpirce已改變");
         this.orderData.totalPrice = this.getTotalPrice;
       }
     }

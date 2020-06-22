@@ -13,9 +13,9 @@
 </template>
 <script>
   import { Dialog } from "vant";
-  import { Toast } from "vant";
 
   import orderListItem from "@/components/orderListItem.vue";
+  import { apiGetOrderList } from "@/apis/heroku.js";
   export default {
     name: "orderList",
     beforeCreate() {
@@ -33,50 +33,15 @@
     components: {
       orderListItem
     },
-    mounted() {
-      // 請求攔截器添加
-      let detailInter = this.$axios.create({});
-      detailInter.interceptors.request.use(
-        config => {
-          // 發起請求前執行什麼
-          Toast.loading({
-            mask: false,
-            duration: 0, // 一直存在
-            forbidClick: true, //禁止點擊
-            message: "加載中..."
-          });
-          return config;
-        },
-        err => {
-          // 請求錯誤
-          Toast.clear();
-          Toast("請求錯誤, 請稍後重試");
-          console.log(err);
-        }
-      );
-
-      // 響應攔截器
-      detailInter.interceptors.response.use(
-        res => {
-          // 請求成功
-          Toast.clear();
-          return res;
-        },
-        err => {
-          // 請求錯誤
-          Toast.clear();
-          Toast("請求錯誤, 請稍後重試");
-          console.log(err);
-        }
-      );
-      console.log(1);
-      detailInter
-        .get("https://vueshopcart.herokuapp.com/orderlist")
+    mounted() {},
+    created() {
+      apiGetOrderList()
         .then(res => {
+          console.log(res);
           this.orderListData = res.data;
         })
-        .catcg(err => {
-          console.log(err);
+        .catch(err => {
+          console.log("test orderlist error", err);
         });
     },
     methods: {

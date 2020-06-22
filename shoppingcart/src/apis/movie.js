@@ -1,25 +1,34 @@
-import req from './https.js'
+import req from "./https.js";
 
-const apiKey = 'ccc4da600602f73cf752066796a150b0';
+const baseURL = "https://api.themoviedb.org/3";
+const apiKey = "ccc4da600602f73cf752066796a150b0";
 const language = "zh-TW";
 
 // 定義接口
-export const apiGetPopularMovie = (page=1, tag) => req ('get', '/discover/movie', {
+export const apiGetPopularMovie = (page = 1, tag) =>
+  req("get", `${baseURL}/discover/movie`, {
     api_key: apiKey,
     sort_by: "popularity.desc",
     page: page,
     language: language,
     with_genres: tag,
-});
+  });
 
-export const apiSearchMovie = (name) => req('get', '/search/movie', {
+export const apiSearchMovie = (name) =>
+  req("get", `${baseURL}/search/movie`, {
     api_key: apiKey,
     language: language,
-    query: name
-});
+    query: name,
+  });
 
-export const apiGetMovieTags = () => req('get', '/genre/movie/list', {
+export const apiGetMovieTags = () =>
+  req("get", `${baseURL}/genre/movie/list`, {
     api_key: apiKey,
     language: language,
-});
+  });
 
+export const apiGetMovieDetail = (id) =>
+  req("get", `${baseURL}/movie/${id}`, {
+    api_key: apiKey,
+    language: language,
+  });

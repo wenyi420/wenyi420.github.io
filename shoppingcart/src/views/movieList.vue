@@ -1,7 +1,11 @@
 <template>
   <div>
     <div class="main">
-      <sideNav class="sidenav" @searchTagMovie="searchTag" :Movietags="Movietags" />
+      <sideNav
+        class="sidenav"
+        @searchTagMovie="searchTag"
+        :Movietags="Movietags"
+      />
       <div class="movie-list">
         <div class="search-movie">
           <input
@@ -19,20 +23,18 @@
           :movie="movie"
           :key="movie.id"
         />
-        <div class="block pagination" v-show="!hasSearch">
-          <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :current-page.sync="currentPage"
-            background
-            layout="prev, pager, next"
-            :total="1000">
-          </el-pagination>
+        <div
+          class="loadNewData"
+          v-if="!isLoadData"
+        >
+          <el-button
+            type="primary"
+            @click="loadNewData"
+          >載入更多</el-button>
         </div>
       </div>
-      
     </div>
-    
+
     <Footer />
   </div>
 </template>
@@ -44,23 +46,27 @@
   import Vue from "vue";
   import { Button } from "vant";
   import { Tag } from "vant";
-  import { Pagination } from 'element-ui';
+  import _ from "lodash";
 
-  import { apiGetPopularMovie, apiGetMovieTags, apiSearchMovie } from '@/apis/movie.js';
+  import {
+    apiGetPopularMovie,
+    apiGetMovieTags,
+    apiSearchMovie
+  } from "@/apis/movie.js";
 
   Vue.use(Tag);
   Vue.use(Button);
-  Vue.use(Pagination);
   export default {
     name: "moveList",
     data() {
       return {
         searchTxt: "",
-        movies:[],
-        currentPage: 1,
-        Movietags:[],
-        hasSearchTag:null,
-        hasSearch:false,
+        movies: [],
+        Movietags: [],
+        hasSearchTag: null,
+        hasSearch: false,
+        isLoadData: false,
+        pageCount: 1
       };
     },
     components: {
@@ -70,48 +76,91 @@
     },
 
     methods: {
-      handleCurrentChange(val) {
-        console.log(`當前頁數: ${val}`);
-        let tag = this.hasSearchTag;
-        
-        apiGetPopularMovie(val, tag).then((res) =>{
-          this.hasSearch = false;
-          this.movies = res.data.results;
-        
-        });
-      },
-      searchTag(tag){
-        this.currentPage = 1;
+      searchTag(tag) {
+        this.pageCount = 1;
         this.hasSearchTag = tag;
-        apiGetPopularMovie(this.currentPage, tag).then((res) =>{
+        apiGetPopularMovie(this.pageCount, tag).then(res => {
+          this.isLoadData = false;
           this.hasSearch = false;
           this.movies = res.data.results;
         });
       },
-      
+      loadNewData() {
+        if (this.hasSearchTag) {
+          this.pageCount++;
+          let page = this.pageCount;
+          apiGetPopularMovie(page, this.hasSearchTag).then(res => {
+            this.isLoadData = true;
+            this.hasSearch = false;
+            this.movies = [...this.movies, ...res.data.results];
+          });
+        } else if (this.hasSearch) {
+          return false;
+        } else {
+          this.pageCount++;
+          let page = this.pageCount;
+          apiGetPopularMovie(page).then(res => {
+            this.isLoadData = true;
+            this.movies = [...this.movies, ...res.data.results];
+          });
+        }
+      },
+      checkScroll() {
+        // 判斷是否到底 以及 是否已經點加載按鈕
+        if (
+          window.innerHeight + window.scrollY >
+            document.body.offsetHeight - 150 &&
+          this.isLoadData
+        ) {
+          this.loadNewData();
+        }
+      },
+
       searchMovie() {
         if (!this.searchTxt) return false;
         let name = this.searchTxt;
-        apiSearchMovie(name).then((res)=>{
+
+        apiSearchMovie(name).then(res => {
+          this.hasSearchTag = null;
           this.hasSearch = true;
+          this.isLoadData = true;
           this.movies = res.data.results;
-          this.searchTxt = '';
-        })
+          this.searchTxt = "";
+        });
       }
     },
     created() {
-      apiGetPopularMovie().then((res) =>{
-        console.log('movie list',res.data.results);
+      apiGetPopularMovie().then(res => {
         this.movies = res.data.results;
       });
-       apiGetMovieTags().then((res)=>{
-        console.log('tags: ',res.data.genres);
+      apiGetMovieTags().then(res => {
         this.Movietags = res.data.genres;
-      })
-     
+      });
     },
-    computed: {
-     
+
+    destroyed() {
+      window.removeEventListener(
+        "scroll",
+        _.throttle(() => {
+          this.checkScroll();
+        }, 500)
+      );
+      this.isLoadData = false;
+    },
+    computed: {},
+    watch: {
+      isLoadData() {
+        if (this.isLoadData) {
+          console.log("isLoadData = true", this.isLoadData);
+
+          window.addEventListener(
+            "scroll",
+            _.throttle(() => {
+              this.checkScroll();
+            }, 500)
+          );
+        }
+      }
     }
   };
 </script>
@@ -126,7 +175,7 @@
     .movie-list {
       display: flex;
       flex-wrap: wrap;
-      width: 75%;
+      width: 80%;
       margin: 0 -15px;
       .search-movie {
         position: relative;
@@ -144,6 +193,14 @@
           font-size: 15px;
         }
       }
+      .loadNewData {
+        width: 100%;
+        .el-button {
+          width: 100%;
+          background: #01b4e4;
+          font-size: 1.4rem;
+        }
+      }
       .noSearch {
         width: 100%;
         color: red;
@@ -151,7 +208,7 @@
         margin-top: 15px;
         padding-bottom: 47vh;
       }
-      .pagination{
+      .pagination {
         justify-content: center;
         width: 100%;
       }

@@ -100,7 +100,7 @@
 <script>
   import Vue from "vue";
   import { Toast } from "vant";
-
+  import { apiPostCartListOrder } from "@/apis/heroku.js";
   Vue.use(Toast);
   import Footer from "@/components/Footer.vue";
 
@@ -118,10 +118,7 @@
     beforeCreate() {
       let cartlist = this.$store.getters.getCartList;
       if (cartlist.length === 0) {
-        console.log("no cartlist");
         this.$router.push("/cart/cartList");
-      } else {
-        console.log("yes cart");
       }
     },
     computed: {
@@ -148,56 +145,17 @@
       },
       async submitCarListInfo() {
         try {
-          // 請求攔截器添加
-          let detailInter = this.$axios.create({});
-          detailInter.interceptors.request.use(
-            config => {
-              // 發起請求前執行什麼
-              Toast.loading({
-                mask: false,
-                duration: 0, // 一直存在
-                forbidClick: true, //禁止點擊
-                message: "加載中..."
-              });
-              return config;
-            },
-            err => {
-              // 請求錯誤
-              Toast.clear();
-              Toast("請求錯誤, 請稍後重試request");
-              console.log(err);
-            }
-          );
+          const postAPI = await apiPostCartListOrder({
+            time: this.getToday,
+            name: this.name,
+            phone: this.phone,
+            email: this.email,
+            movie: this.getCartList,
+            totalPrice: this.getTotalPrice,
+            isPay: false
+          });
 
-          // 響應攔截器
-          detailInter.interceptors.response.use(
-            res => {
-              // 請求成功
-              Toast.clear();
-              return res.data;
-            },
-            err => {
-              // 請求錯誤
-              Toast.clear();
-              Toast("請求錯誤, 請稍後重試responce2");
-              console.log(err);
-            }
-          );
-          const postAPI = await detailInter.post(
-            "https://vueshopcart.herokuapp.com/orderlist",
-            {
-              time: this.getToday,
-              name: this.name,
-              phone: this.phone,
-              email: this.email,
-              movie: this.getCartList,
-              totalPrice: this.getTotalPrice,
-              isPay: false
-            }
-          );
-
-          console.log("post=", postAPI);
-          await this.$store.commit("SET_CUSTOMER_INFO", postAPI);
+          await this.$store.commit("SET_CUSTOMER_INFO", postAPI.data);
 
           await this.$router.push("/cart/checkInfo");
         } catch (err) {

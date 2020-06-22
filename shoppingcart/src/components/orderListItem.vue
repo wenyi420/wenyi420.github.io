@@ -55,8 +55,7 @@
   </div>
 </template>
 <script>
-  import { Toast } from "vant";
-
+  import { apiDeleteOrderItem } from "@/apis/heroku.js";
   export default {
     name: "orderListItem",
     data() {
@@ -74,50 +73,8 @@
         this.$router.push(`/admin/editOrder/${this.item.id}`);
       },
       deleteOrder() {
-        // 請求攔截器添加
-        let detailInter = this.$axios.create({});
-        detailInter.interceptors.request.use(
-          config => {
-            // 發起請求前執行什麼
-            Toast.loading({
-              mask: false,
-              duration: 0, // 一直存在
-              forbidClick: true, //禁止點擊
-              message: "加載中..."
-            });
-            return config;
-          },
-          err => {
-            // 請求錯誤
-            Toast.clear();
-            Toast("請求錯誤, 請稍後重試");
-            console.log(err);
-          }
-        );
-
-        // 響應攔截器
-        detailInter.interceptors.response.use(
-          res => {
-            // 請求成功
-            Toast.loading({
-              mask: false,
-              duration: 1, // 一直存在
-              forbidClick: true, //禁止點擊
-              message: "刪除成功"
-            });
-            return res;
-          },
-          err => {
-            // 請求錯誤
-            Toast.clear();
-            Toast("請求錯誤, 請稍後重試");
-            console.log(err);
-          }
-        );
         let id = this.item.id;
-
-        detailInter
-          .delete(`https://vueshopcart.herokuapp.com/orderlist/${id}`)
+        apiDeleteOrderItem(id)
           .then(res => {
             this.$emit("UPDATE_ORDERLIST", id);
             console.log("刪除成功", res);
@@ -171,6 +128,7 @@
           margin: 0px;
           width: 100%;
           padding: 10px 0px;
+          word-wrap: break-word;
           .btn {
             display: block;
             padding: 5px;

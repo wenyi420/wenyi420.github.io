@@ -16,23 +16,12 @@
     <div class="info">
       <h3 class="title">{{ movie.title }}</h3>
       <p class="time">上映日期：{{ movie.release_date }}</p>
-      <p class="price">
-        售價：<span>$ 50</span>
-
-      </p>
-      <div class="desc">
-        <p v-if="movie.overview !== ''">{{ movie.overview }}</p>
-        <p
-          v-else
-          class="noDesc"
-        >無相關資料</p>
-      </div>
-      <div class="btn">
-        <van-button
-          type="warning"
-          @click="goPage"
-        >詳細內容</van-button>
-      </div>
+      <p class="price">售價：<span>$ 50</span></p>
+      <el-button
+        type="warning"
+        @click="goPage"
+      >詳細內容</el-button>
+      <!-- <van-button type="warning" @click="goPage">詳細內容</van-button> -->
     </div>
   </div>
 </template>
@@ -56,7 +45,7 @@
 
 <style scoped lang="scss">
   .item {
-    width: 33.3333333%;
+    width: 25%;
     position: relative;
     padding: 0 15px 45px;
     .photo {
@@ -80,7 +69,7 @@
 
         img {
           display: block;
-          height: 500px;
+          height: 400px;
           object-fit: cover;
           width: 100%;
         }
@@ -105,6 +94,7 @@
       }
       .time {
         padding: 10px 0px;
+        margin-bottom: 0px;
       }
       .desc {
         overflow: hidden;
@@ -134,12 +124,15 @@
 
   @media screen and (max-width: 1580px) {
     .item .photo a img {
-      height: 400px;
+      height: 350px;
     }
   }
   @media screen and (max-width: 1280px) {
     .item .photo a img {
       height: 300px;
+    }
+    .item {
+      width: 33.333333%;
     }
   }
 
