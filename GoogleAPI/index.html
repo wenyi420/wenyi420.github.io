@@ -10,20 +10,45 @@
   </head>
   <body>
     <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <a href="#" onclick="signOut();">Sign out</a>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
     <script>
       function onSignIn(googleUser) {
+        alert("登入成功");
         // Useful data for your client-side scripts:
-        var profile = googleUser.getBasicProfile();
-        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-        console.log("Full Name: " + profile.getName());
-        console.log("Given Name: " + profile.getGivenName());
-        console.log("Family Name: " + profile.getFamilyName());
-        console.log("Image URL: " + profile.getImageUrl());
-        console.log("Email: " + profile.getEmail());
+        let profile = googleUser.getBasicProfile();
+        let name = profile.getName();
+        let email = profile.getEmail();
 
         // The ID token you need to pass to your backend:
-        var id_token = googleUser.getAuthResponse().id_token;
+        let id_token = googleUser.getAuthResponse().id_token;
         console.log("ID Token: " + id_token);
+
+        apiAddUser(id_token, name, email);
+      }
+
+      //   登出
+      function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+          alert("登出成功");
+          console.log("User signed out.");
+        });
+      }
+
+      function apiAddUser(id, name, email) {
+        axios
+          .post("https://vueshopcart.herokuapp.com/admin", {
+            userID: id,
+            userName: name,
+            userEmail: email,
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       }
     </script>
   </body>
