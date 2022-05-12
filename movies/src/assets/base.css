@@ -4,6 +4,7 @@
   --v-white: #ffffff;
   --v-black: #000000;
   --v-main-color: #e50914;
+  --footer-text-color: #757575;
 
   /* dark main */
   --color-main: var(--v-main-color);
@@ -47,6 +48,7 @@ body, html {
 #app h4,
 #app h5 {
   margin-bottom: 10px;
+  color: var(--color-text);
 }
 
 img{
@@ -68,4 +70,32 @@ body {
 .ant-btn.transparent{
   background: transparent;
   color: var(--color-text);
+}
+.ant-btn-primary.large{
+  font-size: 20px;
+  padding: 14px 2em;
+  min-width: 112px;
+  min-height: 48px;
+  line-height: 1
+}
+.login-content .ant-form-item-explain{
+  margin-top: 5px;
+}
+.login-content .ant-form-item-explain-error{
+  color: #e87c03;
+}
+.login-content .ant-form-item-has-error .ant-input-affix-wrapper{
+  border-color: #e87c03 !important;
+  border: 0px;
+    border-bottom: 2px solid;
+    border-bottom-left-radius: 3px;
+    background: #333 !important ;
+    border-bottom-right-radius: 3px;
+}
+
+.login-content .ant-input-affix-wrapper{
+  padding: 8px 10px;
+}
+.login-content .ant-input-prefix {
+  margin-right: 10px;
 }

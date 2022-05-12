@@ -20,18 +20,80 @@ import movieCategory from "@/components/slide/movieCategory.vue";
     <movieCategory type="romantic"></movieCategory>
     <movieCategory type="violence"></movieCategory>
     <movieCategory type="fear"></movieCategory>
+    <movieCategory type="animation"></movieCategory>
+    <div class="introl with-gradient-blur">
+      <div class="introl-content">
+        <h2>更多精彩內容任您觀賞。</h2>
+        <p>
+          Movies 擁有豐富的影片內容庫，包括長片、紀錄片、節目、動畫、獲獎肯定的
+          Movies 原創作品與更多內容。隨時隨地，盡情觀賞。
+        </p>
+        <a-button type="primary" class="large">立即加入</a-button>
+      </div>
+    </div>
   </main>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 main {
   background: var(--color-background);
-  height: 100vh;
+  height: 100%;
 }
 .category-section {
   padding: 0 3%;
   margin-bottom: 20px;
 }
+
+.movie-slide-list:nth-child(6) {
+  filter: blur(5px);
+}
+.movie-slide-list:nth-child(7) {
+  filter: blur(10px);
+}
+.introl {
+  background: #181818;
+  text-align: center;
+  font-size: 1.5em;
+  position: relative;
+  padding: 1em;
+
+  h2 {
+    font-weight: 700;
+  }
+  @media screen and (min-width: 700px) {
+    h2 {
+      font-size: 1.5em;
+    }
+  }
+  .introl-content {
+    max-width: 730px;
+    margin: 0 auto;
+  }
+}
+.introl.with-gradient-blur {
+  margin-top: -13rem;
+}
+.with-gradient-blur::before {
+  content: " ";
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(rgba(0, 0, 0, 0)),
+    to(#181818)
+  );
+  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0, #181818 100%);
+  background: -moz- oldlinear-gradient(top, rgba(0, 0, 0, 0) 0, #181818 100%);
+  background: -o-linear-gradient(top, rgba(0, 0, 0, 0) 0, #181818 100%);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, #181818 100%);
+  height: 15em;
+  pointer-events: none;
+}
+
 @media screen and (min-width: 600px) {
   .category-section .container {
     max-width: 598px;

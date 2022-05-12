@@ -193,6 +193,7 @@ function goToMovie(id) {
   color: var(--v-main-color);
   font-size: 22px;
   font-weight: bold;
+  cursor: pointer;
 }
 .slide-button-prev {
   left: 0;
@@ -221,7 +222,7 @@ function goToMovie(id) {
   z-index: -1;
 }
 .slide-button-prev .slide-button-gradient {
-  right: 10px;
+  right: 25px;
   background-image: linear-gradient(
     to right,
     #181818 30%,
@@ -229,7 +230,7 @@ function goToMovie(id) {
   );
 }
 .slide-button-next .slide-button-gradient {
-  left: 10px;
+  left: 25px;
   background-image: linear-gradient(
     to left,
     #181818 30%,

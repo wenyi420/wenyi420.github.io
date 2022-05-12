@@ -6,6 +6,10 @@ const router = useRouter();
 function toHomePage() {
   router.push("/");
 }
+
+function goToLogin() {
+  router.push("/login");
+}
 </script>
 
 <template>
@@ -15,16 +19,14 @@ function toHomePage() {
     </div>
     <div class="right">
       <a-space>
-        不限時數的節目與電影
-        <a-button type="primary">立即加入</a-button>
-        <a-button class="transparent">登入</a-button>
+        {{ $t("str_header_component_unlimitedHours") }}
+        <a-button type="primary">{{ $t("str_common_join") }}</a-button>
+        <a-button class="transparent" @click="goToLogin">{{
+          $t("str_common_login")
+        }}</a-button>
       </a-space>
     </div>
   </header>
-  <!-- <nav>
-    <RouterLink to="/">首頁</RouterLink>
-    <RouterLink to="/about">測試</RouterLink>
-  </nav> -->
 </template>
 
 <style lang="scss" scoped>
@@ -41,12 +43,17 @@ header {
   background: var(--v-black);
   color: var(--color-text);
 
-  .logo {
-    line-height: 1;
-    color: var(--color-main);
-    font-size: 32px;
-    font-weight: bold;
-    cursor: pointer;
+  .right {
+    font-size: 13px;
+  }
+  .left {
+    .logo {
+      line-height: 1;
+      color: var(--color-main);
+      font-size: 32px;
+      font-weight: bold;
+      cursor: pointer;
+    }
   }
 }
 </style>

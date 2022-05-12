@@ -317,7 +317,7 @@ vote_count:257
   .similarMovies-item {
     max-width: 100%;
     margin: 6px;
-    width: 250px;
+    width: 308px;
 
     img {
       width: 100%;
