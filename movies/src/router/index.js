@@ -19,7 +19,6 @@ const router = createRouter({
       name: "login",
       component: () => import("@/views/Login.vue"),
     },
-    { path: "*", redirect: "/" },
   ],
   scrollBehavior() {
     // always scroll to top
